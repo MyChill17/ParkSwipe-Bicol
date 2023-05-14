@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ParkSwipe Bicol</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <style>
+    /* CSS styles here */
+    h1 {
+      color: rgb(0, 3, 169);
+      background-color: #fcfcfc;
+    }
+    h2 {
+      color: rgb(0, 3, 169);
+      background-color: #fcfcfc;
+    }
+    h3 {
+      color: rgb(0, 0, 0);
+      background-color: #fcfcfc;
+    }
+    body {
+      background-image: url("my-image.jpg");
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+  </style>
+</head>
+<body>
+  <h1>ParkSwipe Bicol</h1>
+
+  <form id="booking-form">
+    <div class="form-field">
+      <label for="name">Name:</label>
+      <input type="text" id="name" required>
+    </div>
+
+    <div class="form-field">
+      <label for="email">Email:</label>
+      <input type="email" id="email" required>
+    </div>
+
+    <div class="form-field">
+      <label for="location">Location:</label>
+      <select id="location" required>
+        <option value="">Select Location</option>
+      </select>
+    </div>
+
+    <div class="form-field">
+      <label for="date">Date:</label>
+      <input type="date" id="date" required>
+    </div>
+
+    <div class="form-field">
+      <label for="timeslot">Time Slot:</label>
+      <input type="time" id="timeslot" required>
+    </div>
+
+    <button type="submit">Book Parking Slot</button>
+  </form>
+
+  <div id="booking-status"></div>
+
+
+  <h2>"Secure Your Parking in a Snap"</h2>
+  <h3>Alemania|Baloloy|Collao|Labitag|Madronio</h3>
+  <script>
+    var locationDropdown = document.getElementById("location");
+
+    fetch("location-data.json")
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(locations) {
+        locations.forEach(function(location) {
+          var option = document.createElement("option");
+          option.text = location.name;
+          option.value = location.location;
+          locationDropdown.appendChild(option);
+        });
+      })
+      .catch(function(error) {
+        console.log("Error fetching JSON data:", error);
+      });
+
+    var bookingForm = document.getElementById("booking-form");
+    var bookingStatus = document.getElementById("booking-status");
+
+    bookingForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      // Get form values
+      var name = document.getElementById("name").value;
+      var email = document.getElementById("email").value;
+      var location = document.getElementById("location").value;
+      var date = document.getElementById("date").value;
+      var timeslot = document.getElementById("timeslot").value;
+
+      // Perform validation
+      if (!name || !email || !location || !date || !timeslot) {
+        bookingStatus.innerHTML = "<p class='error-message'>Please fill in all fields.</p>";
+        return;
+      }
+
+      // Perform booking logic
+      // Replace this with your own booking logic
+
+      // Display success message
+      bookingStatus.innerHTML = "<p class='success-message'>Booking successful! Your parking slot has been reserved.</p>";
+
+      // Reset the form fields after successful booking
+      bookingForm.reset();
+    });
+  </script>
+
+</body>
+</html>
